@@ -25,7 +25,6 @@ Common ways to break your terminal — and how `rst` recovers them. Type `rst` b
 | Break command | What it does | rst fixes |
 |---|---|---|
 | `cat /dev/urandom` | Binary garbage leaves random escape sequences and alternate charset active | ✓ |
-| `kill -9 <vim-pid>` | Killed TUI app leaves terminal in raw mode with echo off | ✓ |
 | `printf '\e[?1049h'` | Enters alternate screen; scrollback vanishes | ✓ |
 | `printf '\e[?25l'` | Hides the cursor | ✓ |
 | `printf '\e[8m'` | Invisible (concealed) text | ✓ |
