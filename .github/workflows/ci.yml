@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    name: Build & PTY test (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-14, ubuntu-24.04]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Zig
+        uses: mlugg/setup-zig@v2
+        with:
+          version: 0.16.0
+
+      - name: Unit tests
+        run: zig build test
+
+      - name: Fuzz terminfo parser
+        if: runner.os == 'Linux'
+        run: zig build test -Drelease --fuzz=100K
+
+      - name: Build
+        run: zig build --release
+
+      - name: PTY test
+        run: python3 scripts/pty-test.py zig-out/bin/rst
+
+      - name: Show binary
+        run: file zig-out/bin/rst && ls -la zig-out/bin/rst

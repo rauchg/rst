@@ -1,0 +1,16 @@
+.{
+    .name = .rst,
+    .version = "0.1.0",
+    .fingerprint = 0xfb4efa3c6247b01e,
+    .minimum_zig_version = "0.16.0",
+    .dependencies = .{},
+    .paths = .{
+        "src",
+        "build.zig",
+        "build.zig.zon",
+        "LICENSE",
+        "README.md",
+        "scripts/pty-test.py",
+        ".github/workflows",
+    },
+}
